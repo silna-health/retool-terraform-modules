@@ -20,6 +20,12 @@ variable "subnet_ids" {
   description = "Select at two subnets in your selected VPC."
 }
 
+variable "public_subnet_ids" {
+  type        = list(string)
+  description = "Select at two subnets in your selected VPC."
+}
+
+
 variable "ssh_key_name" {
   type        = string
   description = "SSH key name for accessing EC2 instances"
