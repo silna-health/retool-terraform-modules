@@ -1,3 +1,8 @@
+resource "aws_acm_certificate" "cert" {
+  domain_name       = var.domain_name
+  validation_method = "DNS"
+}
+
 resource "aws_lb" "this" {
   name         = "${var.deployment_name}-alb"
   idle_timeout = var.alb_idle_timeout
@@ -9,7 +14,9 @@ resource "aws_lb" "this" {
 resource "aws_lb_listener" "this" {
   load_balancer_arn = aws_lb.this.arn
   port              = 80
-  protocol          = "HTTP"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = aws_acm_certificate.cert.arn
 
   default_action {
     type             = "forward"
